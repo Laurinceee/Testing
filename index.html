@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wedding Dashboard</title>
+  <link rel="stylesheet" href="./frontend/css/global.css">
+  <link rel="stylesheet" href="./frontend/css/index.css">
+</head>
+<body>
+  <div class="container">
+    <h1>💍 Wedding Admin Dashboard</h1>
+    <img src=".//./img/3A.jpg" alt="Couple Photo" class="couple-photo">
+    <h3 class="wedding-date">Date: April 30, 2026</h3>
+
+    <div class="menu">
+      <a href=".//./frontend/admin.html" class="menu-btn">Guest List</a>
+      <a href=".//./frontend/qr.html" class="menu-btn">QR Scanner</a>
+    </div>
+  </div>
+
+  <script>
+    history.replaceState(null, null, location.href);
+  history.pushState(null, null, location.href);
+  window.addEventListener("popstate", function(event) {
+    window.location.replace("/frontend/index.html"); 
+  });
+  </script>
+</body>
+</html>

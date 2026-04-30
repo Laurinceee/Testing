@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Guest Dashboard</title>
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/guest.css">
+</head>
+
+<body>
+
+<div class="container">
+  <h2>💍 Your Invitation</h2>
+
+  <h3 id="status" class="status-text"></h3>
+
+  <img id="qrImage" class="qr-image" style="display:none;" />
+
+  <p class="footer">© Wedding Invitation System</p>
+
+</div>
+
+<script>
+//const guestId = localStorage.getItem("guestId");
+const urlParams = new URLSearchParams(window.location.search);
+const guestId = urlParams.get("id");
+
+async function loadStatus() {
+  try {
+    const res = await fetch(`http://localhost:3000/guest/${guestId}`);
+
+    if (!res.ok) {
+      throw new Error("Guest not found");
+    }
+
+    const guest = await res.json();
+
+    const statusEl = document.getElementById("status");
+    const qrImg = document.getElementById("qrImage");
+
+    if (guest.status === "PENDING") {
+      statusEl.innerText = "⏳ Waiting for approval...";
+      statusEl.className = "status-text pending";
+      qrImg.style.display = "none";
+    }
+
+    if (guest.status === "APPROVED") {
+      statusEl.innerText = "✅ Approved! Here is your QR code";
+      statusEl.className = "status-text approved";
+      qrImg.src = guest.qrCode;
+      qrImg.style.display = "block";
+    }
+
+    if (guest.status === "DECLINED") {
+      statusEl.innerText = "❌ Sorry, your invitation was declined";
+      statusEl.className = "status-text declined";
+      qrImg.style.display = "none";
+    }
+
+  } catch (error) {
+    console.error(error);
+    document.getElementById("status").innerText = "Guest not found ❌";
+  }
+}
+// auto refresh every 3 sec
+setInterval(loadStatus, 3000);
+loadStatus();
+
+history.replaceState(null, null, location.href);
+  history.pushState(null, null, location.href);
+  window.addEventListener("popstate", function(event) {
+    window.location.replace("/index.html"); 
+  });
+</script>
+
+</body>
+</html>

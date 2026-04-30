@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QR Scanner</title>
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/qr.css">
+  <script src="https://unpkg.com/html5-qrcode"></script>
+</head>
+<body>
+  <div class="container">
+    <h2 class="title">Wedding QR Scanner</h2>
+
+    <div id="reader"></div>
+    <h3 id="result"></h3>
+  </div>
+
+  <script>
+    function onScanSuccess(decodedText) {
+      console.log("Scanned:", decodedText);
+
+      fetch("http://localhost:3000/scan", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ qrData: decodedText })
+      })
+      .then(res => res.json())
+      .then(data => {
+        const result = document.getElementById("result");
+
+        if (data.message.includes("successful")) {
+          result.innerText = "WELCOME 💖 " + data.guest.firstName;
+          result.className = "success";
+        } else {
+          result.innerText = data.message;
+          result.className = "error";
+        }
+
+        setTimeout(() => { result.innerText = ""; result.className = ""; }, 5000);
+      })
+      .catch(err => {
+        console.error(err);
+        const result = document.getElementById("result");
+        result.innerText = "Error scanning!";
+        result.className = "error";
+        setTimeout(() => { result.innerText = ""; result.className = ""; }, 5000);
+      });
+    }
+
+    const html5QrCode = new Html5Qrcode("reader");
+
+    Html5Qrcode.getCameras().then(devices => {
+      if (devices && devices.length) {
+        let cameraId = devices[0].id;
+
+        html5QrCode.start(
+          cameraId,
+          { fps: 10, qrbox: { width: 250, height: 250 } },
+          onScanSuccess
+        );
+      }
+    });
+       
+  history.replaceState(null, null, location.href);
+  history.pushState(null, null, location.href);
+  window.addEventListener("popstate", function(event) {
+    window.location.replace("/index.html"); 
+  });
+  
+  </script>
+</body>
+</html>

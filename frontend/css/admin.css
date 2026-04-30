@@ -1,0 +1,142 @@
+/* GENERAL */
+body {
+  font-family: Arial, sans-serif;
+  background: #f8e1e7;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 20px auto;
+  padding: 20px;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* TITLE */
+h2 {
+  text-align: center;
+  color: #C9A227;
+  margin-bottom: 5px;
+}
+
+h3 {
+  text-align: center;
+  margin-top: 0;
+  font-weight: normal;
+  color: #333;
+}
+
+/* TABLE */
+.table-responsive {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  padding: 12px 8px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background: #C9A227;
+  color: white;
+}
+
+img {
+  border-radius: 10px;
+  max-width: 100px;
+  height: auto;
+}
+
+/* BUTTONS */
+button {
+  padding: 6px 12px;
+  margin: 2px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.approve {
+  background: #28a745;
+  color: white;
+}
+
+.decline {
+  background: #dc3545;
+  color: white;
+}
+
+/* FOOTER */
+.footer {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 12px;
+  color: #555;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  table, th, td {
+    font-size: 14px;
+    padding: 8px 4px;
+  }
+
+  img {
+    max-width: 70px;
+  }
+
+  button {
+    padding: 4px 8px;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  h3 {
+    font-size: 1rem;
+  }
+
+  td {
+    padding: 6px 2px;
+  }
+}
+
+#liveStatus {
+  color: green;
+  font-size: 12px;
+  text-align: center;
+}
+
+#searchInput {
+  width: 100%;
+  max-width: 600px;   /* prevents it from being too wide on big screens */
+  padding: 10px 15px;
+  margin: 10px auto 20px auto; /* centers it and adds spacing */
+  display: block;      /* necessary for centering */
+  font-size: 1rem;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#searchInput:focus {
+  outline: none;
+  border-color: #C9A227; /* gold-ish highlight when focused */
+  box-shadow: 0 0 5px rgba(201, 162, 39, 0.6);
+}

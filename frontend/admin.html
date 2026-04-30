@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Guest List</h2>
+    <h3 id="stats"></h3>  
+    <input
+  type="text"
+  id="searchInput"
+  placeholder="🔍 Search guest..."
+  oninput="loadGuests()"
+/>
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Action</th>
+            <th>QR</th>
+          </tr>
+        </thead>
+        <tbody id="guestTable"></tbody>
+      </table>
+    </div>
+
+    <p class="footer">© Wedding Invitation System</p>
+    <p id="liveStatus">🟢 Live updating...</p>
+  </div>
+
+  <script>
+    const password = prompt("Enter admin password:");
+    if (password !== "admin123") {
+      alert("Access denied!");
+      window.location.href = "register.html";
+    }
+
+    let lastData = "";
+
+async function loadGuests() {
+  const res = await fetch("http://localhost:3000/guests");
+  const guests = await res.json();
+  const searchInput = document.getElementById("searchInput");
+  const search = searchInput.value.trim().toLowerCase();
+
+const filteredGuests = guests.filter(g => {
+  if (!search) return true; // show all if search is empty
+  const fullName = `${g.firstName} ${g.lastName}`.toLowerCase();
+  return fullName.includes(search);
+});
+
+  // STATS
+  const total = filteredGuests.length;
+  const approved = filteredGuests.filter(g => g.status === "APPROVED").length;
+  const pending = filteredGuests.filter(g => g.status === "PENDING").length;
+
+  document.getElementById("stats").innerHTML =
+    `👥 Total: ${total} | ✅ Approved: ${approved} | ⏳ Pending: ${pending}`;
+
+  const table = document.getElementById("guestTable");
+  table.innerHTML = "";
+
+  filteredGuests.forEach(g => {
+    const row = document.createElement("tr");
+
+    row.innerHTML = `
+      <td>${g.firstName} ${g.lastName}</td>
+      <td style="color:${
+        g.status === 'APPROVED' ? 'green' :
+        g.status === 'DECLINED' ? 'red' : 'orange'
+      }">${g.status}</td>
+      <td>
+       <button class="approve" ${g.status === "APPROVED" ? "disabled" : ""} onclick="updateStatus('${g.id}', 'APPROVED')">Approve</button>
+       <button class="decline" ${g.status === "DECLINED" ? "disabled" : ""} onclick="updateStatus('${g.id}', 'DECLINED')">Decline</button>
+      </td>
+      <td>${g.qrCode ? `<img src="${g.qrCode}" width="80"/>` : "No QR"}</td>
+    `;
+
+    table.appendChild(row);
+  });
+}
+
+   async function updateStatus(id, status) {
+  try {
+    const res = await fetch(`http://localhost:3000/guests/${id}/status`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ status }),
+    });
+
+    if (!res.ok) {
+      const error = await res.json();
+      alert(`Failed to update status: ${error.message}`);
+      return;
+    }
+    document.getElementById("searchInput").value = "";
+    loadGuests();
+    
+  } catch (error) {
+    alert("Network error while updating status.");
+    console.error(error);
+  }
+}
+setInterval(loadGuests, 3000);
+
+loadGuests();
+    history.replaceState(null, null, location.href);
+  history.pushState(null, null, location.href);
+  window.addEventListener("popstate", function(event) {
+    window.location.replace("/index.html"); 
+  });
+  </script>
+</body>
+</html>

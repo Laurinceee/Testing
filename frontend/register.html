@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wedding Registration</title>
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/try.css">
+</head>
+<body>
+  <!-- 💍 HERO SECTION -->
+<div class="hero">
+  <h1>💍 John & Jane</h1>
+  <p class="wedding-date">June 25, 2026</p>
+  <h2 id="countdown"></h2>
+</div>
+
+<!-- 📍 VENUE -->
+<div class="section">
+  <h3>📍 Ceremony & Reception</h3>
+  <p>Tagaytay Wedding Hall</p>
+  <a href="https://maps.google.com" target="_blank" class="map-btn">View Map</a>
+</div>
+
+<!-- 📅 PROGRAM -->
+<div class="section">
+  <h3>📅 Wedding Program</h3>
+  <ul>
+    <li>🕐 2:00 PM - Guest Arrival</li>
+    <li>💍 3:00 PM - Ceremony</li>
+    <li>📸 4:00 PM - Photo Session</li>
+    <li>🍽️ 6:00 PM - Dinner</li>
+  </ul>
+</div>
+
+<!-- 👗 DRESS CODE -->
+<div class="section">
+  <h3>👗 Dress Code</h3>
+  <p>Formal Attire</p>
+</div>
+
+  <div class="container">
+    <h2>Guest Registration</h2>
+
+    <form id="registerForm">
+      <input type="text" id="firstName" placeholder="First Name" required>
+      <input type="text" id="middleName" placeholder="Middle Name">
+      <input type="text" id="lastName" placeholder="Last Name" required>
+      <input type="number" id="age" placeholder="Age">
+      <input type="text" id="address" placeholder="Address">
+      <input type="email" id="email" placeholder="Email Address" required>
+      <button type="submit">Register</button>
+    </form>
+
+    <p id="message"></p>
+    <img id="qrImage" alt="Guest QR Code" style="display:none;"/>
+    
+    <p class="footer">© Wedding Invitation System</p>
+  </div>
+
+  <script>
+    document.getElementById("registerForm").addEventListener("submit", async function(e) {
+      e.preventDefault();
+      try {
+        const data = {
+          firstName: document.getElementById("firstName").value,
+          middleName: document.getElementById("middleName").value,
+          lastName: document.getElementById("lastName").value,
+          age: Number(document.getElementById("age").value),
+          address: document.getElementById("address").value,
+          email: document.getElementById("email").value
+        };
+
+        const res = await fetch("http://localhost:3000/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        });
+
+        const result = await res.json();
+
+       // document.getElementById("message").innerText = result.message;
+       //localStorage.setItem("guestId", result.guest.id);
+        window.location.href = `guest.html?id=${result.guest.id}`;
+        // redirect to guest dashboard
+        //window.location.href = "guest.html";
+
+
+       //const qrImg = document.getElementById("qrImage");
+       const qrImg = document.getElementById("qrImage");
+
+      if (result.guest.qrCode) {   // check first
+        qrImg.src = result.guest.qrCode;
+        qrImg.style.display = "block";
+      } else {
+        qrImg.style.display = "none"; // no QR yet, hide image
+      }
+
+      } catch (error) {
+        console.error("ERROR:", error);
+        document.getElementById("message").innerText = "Error!";
+      }
+    });
+
+    history.replaceState(null, null, location.href);
+  history.pushState(null, null, location.href);
+  window.addEventListener("popstate", function(event) {
+    window.location.replace("/index.html"); 
+  });
+
+  const weddingDate = new Date("June 25, 2026 15:00:00").getTime();
+
+setInterval(() => {
+  const now = new Date().getTime();
+  const distance = weddingDate - now;
+
+  if (distance < 0) {
+    document.getElementById("countdown").innerText = "💖 Happily Married!";
+    return;
+  }
+
+  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
+  const minutes = Math.floor((distance / 1000 / 60) % 60);
+
+  document.getElementById("countdown").innerText =
+    `${days}d ${hours}h ${minutes}m left 💍`;
+}, 1000);
+  </script>
+</body>
+</html>

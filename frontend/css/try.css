@@ -1,0 +1,139 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f8e1e7;
+  min-height: 100vh;
+  margin: 0;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+/* =========================
+   GLOBAL LAYOUT SYSTEM
+========================= */
+.container,
+.section,
+.hero {
+  width: min(90%, 420px);
+  margin: 0 auto 20px;
+}
+
+/* =========================
+   HERO SECTION
+========================= */
+.hero {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.hero h1 {
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  color: #C9A227;
+}
+
+.wedding-date {
+  color: #555;
+}
+
+#countdown {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+/* =========================
+   SECTION CARD
+========================= */
+.section {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.section h3 {
+  color: #C9A227;
+}
+
+/* =========================
+   FORM CONTAINER
+========================= */
+.container {
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  color: #C9A227;
+  margin-bottom: 20px;
+}
+
+/* =========================
+   FORM ELEMENTS
+========================= */
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  font-size: 16px; /* iOS zoom fix */
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background: #C9A227;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+button:hover {
+  background: #a8861c;
+}
+
+/* =========================
+   MEDIA / UTILITIES
+========================= */
+img {
+  margin-top: 15px;
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+#message {
+  margin-top: 12px;
+  font-weight: bold;
+  word-wrap: break-word;
+}
+
+.footer {
+  margin-top: 20px;
+  font-size: 12px;
+  color: #555;
+}
+
+/* =========================
+   MOBILE ADJUSTMENTS
+========================= */
+@media (max-width: 480px) {
+  body {
+    padding: 12px;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  .container {
+    padding: 20px;
+  }
+}

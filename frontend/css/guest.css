@@ -1,0 +1,86 @@
+/* STATUS TEXT */
+.status-text {
+  margin-top: 10px;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+/* STATUS COLORS */
+.pending {
+  color: orange;
+}
+
+.approved {
+  color: green;
+}
+
+.declined {
+  color: red;
+}
+
+/* QR IMAGE */
+.qr-image {
+  margin-top: 20px;
+  max-width: 200px;
+  width: 100%;
+  border-radius: 10px;
+}
+
+/* CONTAINER CENTER FIX (same as register & qr) */
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+.container {
+  max-width: 400px;
+  text-align: center;
+}
+
+h2 {
+  margin-bottom: 10px;
+}
+
+.status-text {
+  margin-top: 15px;
+  font-size: 1.3rem;
+}
+
+.qr-image {
+  margin-top: 25px;
+}
+
+.status-text {
+  display: inline-block;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+/* COLORS WITH BACKGROUND */
+.pending {
+  background: #f8e1e7;
+  color: #856404;
+}
+
+.approved {
+  background: #d4edda;
+  color: #155724;
+}
+
+.declined {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.qr-image {
+  display: block;
+  margin: 25px auto;
+  max-width: 200px;
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
