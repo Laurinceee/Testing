@@ -72,16 +72,25 @@
         };
 
         const res = await fetch("http://localhost:3000/register", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data)
-        });
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify(data)
+});
 
-        const result = await res.json();
+const result = await res.json();
+
+if (!res.ok) {
+  document.getElementById("message").innerText = result.message || "Error!";
+  return;
+}
+if (result.guest?.id) {
+  window.location.href = `guest.html?id=${result.guest.id}`;
+}
+      
 
        // document.getElementById("message").innerText = result.message;
        //localStorage.setItem("guestId", result.guest.id);
-        window.location.href = `guest.html?id=${result.guest.id}`;
+        // window.location.href = `guest.html?id=${result.guest.id}`;
         // redirect to guest dashboard
         //window.location.href = "guest.html";
 
