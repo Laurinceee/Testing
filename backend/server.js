@@ -17,16 +17,19 @@ const admin = require("firebase-admin");
 
 const serviceAccount = require("./wedding-system-e3097-firebase-adminsdk-fbsvc-68061e3b7c.json");
 console.log("Project:", serviceAccount.project_id);
+
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
+  credential: admin.credential.cert({
+    projectId: process.env.FIREBASE_PROJECT_ID,
+    clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+    privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n"),
+  }),
 });
 // admin.initializeApp({
-//   credential: admin.credential.cert({
-//     projectId: process.env.FIREBASE_PROJECT_ID,
-//     clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-//     privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n"),
-//   }),
+//   credential: admin.credential.cert(serviceAccount),
+//   projectId: "wedding-system-e3097",
 // });
+
 console.log("EMAIL:", process.env.GMAIL_USER);
 console.log("PASS:", process.env.GMAIL_PASS);
 
