@@ -15,13 +15,16 @@ app.use(express.static("public"));
 
 const admin = require("firebase-admin");
 
-const serviceAccount = require("./wedding-system-e3097-firebase-adminsdk-fbsvc-68061e3b7c.json");
-console.log("Project:", serviceAccount.project_id);
+// const serviceAccount = require("./wedding-system-e3097-firebase-adminsdk-fbsvc-68061e3b7c.json");
+// console.log("Project:", serviceAccount.project_id);
+console.log("Project:", process.env.FIREBASE_PROJECT_ID);
+console.log("PRIVATE KEY LENGTH:", process.env.FIREBASE_PRIVATE_KEY?.length);
 
 admin.initializeApp({
   credential: admin.credential.cert({
     projectId: process.env.FIREBASE_PROJECT_ID,
     clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+
     privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n"),
   }),
 });
