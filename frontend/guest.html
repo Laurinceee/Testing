@@ -26,7 +26,7 @@ const guestId = urlParams.get("id");
 
 async function loadStatus() {
   try {
-    const res = await fetch(`http://localhost:3000/guest/${guestId}`);
+    const res = await fetch(`https://wedding-system-8yvp.onrender.com/guest/${guestId}`);
 
     if (!res.ok) {
       throw new Error("Guest not found");
