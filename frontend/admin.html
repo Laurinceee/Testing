@@ -45,7 +45,7 @@
     let lastData = "";
 
 async function loadGuests() {
-  const res = await fetch("http://localhost:3000/guests");
+  const res = await fetch("https://wedding-system-8yvp.onrender.com/guests");
   const guests = await res.json();
   const searchInput = document.getElementById("searchInput");
   const search = searchInput.value.trim().toLowerCase();
@@ -89,7 +89,7 @@ const filteredGuests = guests.filter(g => {
 
    async function updateStatus(id, status) {
   try {
-    const res = await fetch(`http://localhost:3000/guests/${id}/status`, {
+    const res = await fetch(`https://wedding-system-8yvp.onrender.com/guests/${id}/status`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ status }),
